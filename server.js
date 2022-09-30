@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 // ROUTES WITH / IN URL
-app.use('/', routes)
+app.use('/api', routes)
 
 app.listen(PORT || 8000, () => {
     console.log(colors.rainbow(`
