@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --watch-all",
     "start": "node server.js",
-    "data:import": "DEBUG=app:seeder node db/seed.js -import"
+    "seed": "node db/seed.js -import"
   },
   "repository": {
     "type": "git",

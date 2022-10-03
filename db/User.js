@@ -1,4 +1,4 @@
-const {Sequelize, sequelize} = require('./db');
+const { Sequelize, sequelize } = require('./db');
 
 const User = sequelize.define('user', {
   isAdmin: Sequelize.BOOLEAN,
@@ -6,6 +6,7 @@ const User = sequelize.define('user', {
   name: Sequelize.STRING,
   employee: Sequelize.STRING,
   email: Sequelize.STRING,
+  password: Sequelize.STRING,
   phone: Sequelize.STRING,
   address: Sequelize.STRING,
 });

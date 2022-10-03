@@ -1,4 +1,4 @@
-const {sequelize} = require('./db');
+const { sequelize } = require('./db');
 const seed = require('./seedFn');
 
 seed()
@@ -11,4 +11,3 @@ seed()
   .finally(() => {
     sequelize.close();
   });
-  

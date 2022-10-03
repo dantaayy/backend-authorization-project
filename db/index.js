@@ -1,5 +1,5 @@
-const {User} = require('./User');
-const {sequelize, Sequelize} = require('./db');
+const { User } = require('./User');
+const { sequelize, Sequelize } = require('./db');
 
 module.exports = {
     User,

@@ -1,5 +1,5 @@
-const {sequelize} = require('./db');
-const {User} = require('./');
+const { sequelize } = require('./db');
+const { User } = require('./');
 const users = require('./seedData');
 const bcrypt = require('bcryptjs')
 
