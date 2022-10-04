@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs')
 const app = express()
 
 // This wold normally be in a .env file
-const JWT_SECRET = 'dvbyhs8UpJhzX08fH6yTg2ksnB'
+// const JWT_SECRET = 'dvbyhs8UpJhzX08fH6yTg2ksnB'
 
 // Make sure express server can talk in json
 app.use(express.json())
@@ -35,7 +35,7 @@ const setUser = async (req, res, next) => {
     } else {
         // Split (Bearer 'token') to verify with jwt
         const [, token] = auth.split(' ')
-        const user = jwt.verify(token, JWT_SECRET)
+        const user = jwt.verify(token, process.env.JWT_SECRET)
         // Assign the requested user to equal user
         req.user = user
         next()
@@ -63,7 +63,7 @@ app.post('/register', async (req, res) => {
     const token = await jwt.sign({
         id: user.id,
         email
-    }, JWT_SECRET)
+    }, process.env.JWT_SECRET)
 
     res.send({
         message: "Success",
@@ -90,7 +90,7 @@ app.post('/login', async (req, res) => {
         const token = jwt.sign({
             id,
             email
-        }, JWT_SECRET)
+        }, process.env.JWT_SECRET)
 
         res.send({
             message: "Success",
