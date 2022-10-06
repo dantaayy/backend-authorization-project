@@ -62,7 +62,7 @@ app.post('/register', async (req, res) => {
     // Sign token with jwt
     const token = await jwt.sign({
         id: user.id,
-        email
+        email: user.email
     }, process.env.JWT_SECRET)
 
     res.send({
@@ -74,13 +74,11 @@ app.post('/register', async (req, res) => {
 // POST /login user to perform neccesary tasks
 app.post('/login', async (req, res) => {
     const { email, password } = req.body
-    console.log(email)
 
     // Find logged in user in db
     const user = await User.findOne({ where: { email } })
     // Compare password with encrypted password
     const validated = await bcrypt.compare(password, user.password)
-    console.log(validated)
 
     // Check if user entered correct password
     if (validated) {
@@ -143,8 +141,43 @@ app.get('/users/:id', setUser, async (req, res) => {
 // }
 
 // DELETE /user/:id only self can delete self if not an admin
+app.delete('/users/:id', setUser, async (req, res) => {
+    // If no logged in user send unauthorized
+    if (!req.user) {
+        res.sendStatus(401)
+    } else {
+        // Find user by id
+        const userId = req.params.id
 
-// DELETE /admin/user/:id only admins can deete other users or self can delete self
+        const foundUser = User.findByPk(userId)
+
+        // check if user exists & logged in user is accessing themselves
+        if (!foundUser || foundUser.id != req.user.id) {
+            res.sendStatus(401)
+        } else {
+            // Delete user if logged in user is deleting them self
+            await foundUser.destroy()
+        }
+    }
+})
+
+// DELETE /admin/user/:id only admins can delete other users and can delete self
+app.delete('/admin/users/:id', setUser, async (req, res) => {
+    if (!req.user) {
+        res.sendStatus(401)
+    } else {
+        const userId = req.params.id
+
+        const foundUser = User.findByPk(userId)
+
+        // Check if user has admin rights
+        if (foundUser.isAdmin === true) {
+            await foundUser.destroy()
+        } else {
+            res.sendStatus(401)
+        }
+    }
+})
 
 
 // Error handling middleware
