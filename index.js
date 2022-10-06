@@ -128,17 +128,21 @@ app.get('/users/:id', setUser, async (req, res) => {
     }
 })
 
-// GET /admin login to see more info then a regular user
-// // Validate if user is an admin or not
-// if (foundUser.isAdmin === true && foundUser.id === req.user.id) {
-//     res.send({
-//         isAdmin,
-//         name,
-//         employee,
-//         email,
-//         phone
-//     })
-// }
+// GET /admin/users login to see more info then a regular user
+app.get('/admin/users', setUser, async (req, res) => {
+    if (!req.user) {
+        res.sendStatus(401)
+    } else {
+        // Validate if user is an admin or not
+        if (foundUser.isAdmin === true) {
+            const allusers = await User.findAll()
+            res.send({
+                allusers
+            })
+        }
+    }
+})
+
 
 // DELETE /user/:id only self can delete self if not an admin
 app.delete('/users/:id', setUser, async (req, res) => {
