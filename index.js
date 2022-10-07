@@ -181,7 +181,7 @@ app.delete('/admin/users/:id', setUser, async (req, res) => {
     } else {
         const userId = req.params.id
 
-        const foundUser = User.findByPk(userId)
+        const foundUser = await User.findByPk(userId)
 
         // Check if user has admin rights
         if (req.user.isAdmin === true) {
