@@ -166,6 +166,13 @@ app.delete('/users/:id', setUser, async (req, res) => {
         // check if user exists & logged in user is accessing themselves
         if (!foundUser || foundUser.email != req.user.email) {
             res.sendStatus(401)
+        }
+
+        // If logged in user is admin they have delete permissions
+        if (req.user.isAdmin === true) {
+            // Delete user if logged in user is an admin
+            await foundUser.destroy()
+            res.send(`Succesfully deleted!`)
         } else {
             // Delete user if logged in user is deleting them self
             await foundUser.destroy()
