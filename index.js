@@ -119,7 +119,10 @@ app.get('/users/:id', setUser, async (req, res) => {
         // trying to access a different user without permission (unless is an admin)
         if (!foundUser || foundUser.id != req.user.id) {
             res.sendStatus(401)
-        } else {
+        }
+
+        // If user is admin or trying to access themself allow access
+        if (foundUser.isAdmin === true || foundUser.id === req.user.id) {
             res.send({
                 isAdmin,
                 name,
@@ -150,6 +153,35 @@ app.get('/admin/users', setUser, async (req, res) => {
             res.sendStatus(401)
         }
     }
+})
+
+// POST /users/:id update yourself only
+app.post('/users/:id', setUser, async (req, res) => {
+    if(!req.user) {
+        res.sendStatus(401)
+    }
+    // Find user by id
+    const userId = req.params.id
+    const foundUser = await user.findByPk(userId)
+
+    // Validate if user is trying to access self
+    if(!foundUser || foundUser.id != req.user.id) {
+        res.sendStatus(401)
+    }
+
+    // set the new attr to foundUser if it they are accessing themself
+    if(foundUser.id === req.user.id) {
+        foundUser.set(req.body)
+
+        // save into database
+        await foundUser.save()
+
+        res.send({
+            message: `Succesfully updated!`,
+            foundUser
+        })
+    }
+
 })
 
 // DELETE /user/:id only self can delete self if not an admin
