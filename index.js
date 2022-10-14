@@ -117,12 +117,12 @@ app.get('/users/:id', setUser, async (req, res) => {
 
         // Validate if there is a registered user or if they are
         // trying to access a different user without permission (unless is an admin)
-        if (!foundUser || foundUser.id != req.user.id) {
+        if (!foundUser || foundUser.id != req.user.id && req.user.isAdmin !== true) {
             res.sendStatus(401)
         }
 
-        // If user is admin or trying to access themself allow access
-        if (foundUser.isAdmin === true || foundUser.id === req.user.id) {
+        // If user is admin or regular user is trying to access themself allow access
+        if (req.user.isAdmin === true || foundUser.id === req.user.id) {
             res.send({
                 isAdmin,
                 name,
@@ -155,22 +155,22 @@ app.get('/admin/users', setUser, async (req, res) => {
     }
 })
 
-// POST /users/:id update yourself only
-app.post('/users/:id', setUser, async (req, res) => {
+// POST /admin/users/:id admin can only update others after a request is sent in
+app.post('/admin/users/:id', setUser, async (req, res) => {
     if(!req.user) {
         res.sendStatus(401)
     }
     // Find user by id
     const userId = req.params.id
-    const foundUser = await user.findByPk(userId)
+    const foundUser = await User.findByPk(userId)
 
     // Validate if user is trying to access self
-    if(!foundUser || foundUser.id != req.user.id) {
+    if(!foundUser || req.user.isAdmin !== true) {
         res.sendStatus(401)
     }
 
-    // set the new attr to foundUser if it they are accessing themself
-    if(foundUser.id === req.user.id) {
+    // set the new attr to foundUser if it they are an admin
+    if(req.user.isAdmin === true) {
         foundUser.set(req.body)
 
         // save into database
@@ -196,7 +196,7 @@ app.delete('/users/:id', setUser, async (req, res) => {
         const foundUser = await User.findByPk(userId)
 
         // check if user exists & logged in user is accessing themselves
-        if (!foundUser || foundUser.email != req.user.email) {
+        if (!foundUser || foundUser.email != req.user.email && req.user.isAdmin !== true) {
             res.sendStatus(401)
         }
 
@@ -205,33 +205,13 @@ app.delete('/users/:id', setUser, async (req, res) => {
             // Delete user if logged in user is an admin
             await foundUser.destroy()
             res.send(`Succesfully deleted!`)
-        } else {
+        } else if (foundUser.email === req.user.email) {
             // Delete user if logged in user is deleting them self
             await foundUser.destroy()
             res.send(`Succesfully deleted!`)
         }
     }
 })
-
-// DELETE /admin/user/:id only admins can delete other users and can delete self
-app.delete('/admin/users/:id', setUser, async (req, res) => {
-    if (!req.user) {
-        res.sendStatus(401)
-    } else {
-        const userId = req.params.id
-
-        const foundUser = await User.findByPk(userId)
-
-        // Check if user has admin rights
-        if (req.user.isAdmin === true) {
-            await foundUser.destroy()
-            res.send(`Succesfully destroyed!`)
-        } else {
-            res.sendStatus(401)
-        }
-    }
-})
-
 
 // Error handling middleware
 app.use((error, req, res, next) => {
