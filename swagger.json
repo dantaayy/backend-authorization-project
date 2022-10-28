@@ -1,0 +1,1015 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Backend API Authorization API",
+    "contact": {}
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "securityDefinitions": {},
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "POST log user into the system",
+        "tags": [
+          "login"
+        ],
+        "operationId": "http://localhost:4000/login",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "message": "Success",
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJtYXllcmdyYXZlc0B6aWxsYS5jb20iLCJpYXQiOjE2NjU3NjM1NTR9.C_6gzF71kpXMl4GjLBLeYIY1mCiKRMR372wDnY3sVcg"
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "189"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"bd-v2Jbfcv4qalA4eF8sUyT+RZNU/k\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 14 Oct 2022 16:05:54 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/register": {
+      "post": {
+        "summary": "POST register user into the system",
+        "tags": [
+          "register"
+        ],
+        "operationId": "http://localhost:4000/register",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RegisterUserRequest"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "message": "Success!",
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJ0ZXN0aW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY2NTc2MzYwMX0.Z9ZDjGyMdPA9jw3NEsvuqTsdIsyVGp9AfoWRxpT1Ac8"
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "189"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"bd-05lAA3C4bx22ENDHNQ+CILEyjmo\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 14 Oct 2022 16:06:41 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "GET user by id if self or admin",
+        "tags": [
+          "users"
+        ],
+        "operationId": "http://localhost:4000/users/1",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8",
+          "text/plain; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserInfo"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "isAdmin": false,
+                "name": "Collins Burch",
+                "employee": "SONIQUE",
+                "email": "collinsburch@sonique.com",
+                "phone": "+1 (998) 564-2710"
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "124"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"7c-Z+p9ADKOr9jEa08XQ6KwsYPhr4Y\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 14 Oct 2022 16:23:28 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "examples": {
+              "text/plain; charset=utf-8": "Unauthorized"
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "12"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"c-dAuDFQrdjS3hezqxDTNgW7AOlYk\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Tue, 18 Oct 2022 17:05:12 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "DELETE user by id if self or admin",
+        "tags": [
+          "users"
+        ],
+        "operationId": "http://localhost:4000/users/2",
+        "deprecated": false,
+        "produces": [
+          "text/plain; charset=utf-8",
+          "text/html; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "examples": {
+              "text/html; charset=utf-8": "Succesfully deleted!"
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "20"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"14-BeUKFNzFMM/TM3AmnjPde2KSagw\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Tue, 18 Oct 2022 17:07:51 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "examples": {
+              "text/plain; charset=utf-8": "Unauthorized"
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "12"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"c-dAuDFQrdjS3hezqxDTNgW7AOlYk\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Tue, 18 Oct 2022 17:07:19 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "summary": "GET user list as an admin",
+        "tags": [
+          "admin"
+        ],
+        "operationId": "http://localhost:4000/admin/users",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8",
+          "text/plain; charset=utf-8"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AdminView"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "allusers": [
+                  {
+                    "id": 1,
+                    "isAdmin": false,
+                    "age": 29,
+                    "name": "Collins Burch",
+                    "employee": "SONIQUE",
+                    "email": "collinsburch@sonique.com",
+                    "password": "$2a$10$JJt/CZgfdGBRx6WjeLqz..eMppE2Vuvy0cJNAIqwPgsj3tICtZdGC",
+                    "phone": "+1 (998) 564-2710",
+                    "address": "857 Rockaway Avenue, Hall, Alaska, 7098",
+                    "createdAt": "2022-10-14T16:04:48.000Z",
+                    "updatedAt": "2022-10-14T16:04:48.000Z"
+                  },
+                  {
+                    "id": 2,
+                    "isAdmin": true,
+                    "age": 38,
+                    "name": "Mayer Graves",
+                    "employee": "ZILLA",
+                    "email": "mayergraves@zilla.com",
+                    "password": "$2a$10$Wd50/Q7Yun5EFsg6Lc/QDuug2T/UgGg89PR6dxzjMzzIK6VbIJykW",
+                    "phone": "+1 (925) 580-2220",
+                    "address": "830 Wilson Street, Somerset, Maine, 505",
+                    "createdAt": "2022-10-14T16:04:48.000Z",
+                    "updatedAt": "2022-10-14T16:04:48.000Z"
+                  },
+                  {
+                    "id": 3,
+                    "isAdmin": false,
+                    "age": 20,
+                    "name": "Gayle Daniel",
+                    "employee": "FUTURITY",
+                    "email": "gayledaniel@futurity.com",
+                    "password": "$2a$10$shhFz/CsCOfF.1CwWLFqlO6qNYAf.XHGl6Je5MacQoXum8uBeJUHG",
+                    "phone": "+1 (935) 447-2173",
+                    "address": "645 Anna Court, Dragoon, Hawaii, 6220",
+                    "createdAt": "2022-10-14T16:04:48.000Z",
+                    "updatedAt": "2022-10-14T16:04:48.000Z"
+                  },
+                  {
+                    "id": 4,
+                    "isAdmin": true,
+                    "age": 31,
+                    "name": "Rosalyn Curtis",
+                    "employee": "ZOSIS",
+                    "email": "rosalyncurtis@zosis.com",
+                    "password": "$2a$10$pjxi89k0hN05OBNcAq7faepjug2hQZBsfSjdFomm5ZsjAR80CFC8q",
+                    "phone": "+1 (895) 463-3120",
+                    "address": "174 Bragg Street, Stouchsburg, Montana, 3884",
+                    "createdAt": "2022-10-14T16:04:48.000Z",
+                    "updatedAt": "2022-10-14T16:04:48.000Z"
+                  },
+                  {
+                    "id": 5,
+                    "isAdmin": false,
+                    "age": 25,
+                    "name": "Jeri Diaz",
+                    "employee": "AMTAP",
+                    "email": "jeridiaz@amtap.com",
+                    "password": "$2a$10$I86/i4P5nqPYgSdcw80q8e.5XfPtMIAef2Uv1mfeHC057NcgDfYku",
+                    "phone": "+1 (813) 551-3540",
+                    "address": "167 Anthony Street, Hayden, Wyoming, 3523",
+                    "createdAt": "2022-10-14T16:04:48.000Z",
+                    "updatedAt": "2022-10-14T16:04:48.000Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "1722"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"6ba-1BEkWUu43XidLMfse20K8Uq9vY8\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 14 Oct 2022 16:06:20 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "examples": {
+              "text/plain; charset=utf-8": "Unauthorized"
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "12"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"c-dAuDFQrdjS3hezqxDTNgW7AOlYk\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 14 Oct 2022 16:23:47 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/users/{id}": {
+      "post": {
+        "summary": "POST update user by id as an admin",
+        "tags": [
+          "admin"
+        ],
+        "operationId": "http://localhost:4000/admin/users/3",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8",
+          "text/plain; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateUserRequest"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "message": "Succesfully updated!",
+                "user": {
+                  "id": 6,
+                  "isAdmin": true,
+                  "age": 28,
+                  "name": "Dante Testing",
+                  "employee": "AMEX",
+                  "email": "testing123@gmail.com",
+                  "password": "$2a$10$Z1HNZHqZtx.Mvv3719U5f..7ZOZdMjNWX.We2Q.zY0QMMtJqoiAIS",
+                  "phone": "+1 (520) 123-4567",
+                  "address": "AMX BLVD Testing, New York, 123",
+                  "createdAt": "2022-10-14T16:06:41.000Z",
+                  "updatedAt": "2022-10-14T16:09:11.301Z"
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "375"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"177-X7iQNodd9ALPiUo8oGdXcSs30PU\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 14 Oct 2022 16:09:11 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "examples": {
+              "text/plain; charset=utf-8": "Unauthorized"
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "12"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"c-dAuDFQrdjS3hezqxDTNgW7AOlYk\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Fri, 14 Oct 2022 16:24:27 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "definitions": {
+    "Login": {
+      "title": "LoginRequest",
+      "example": {
+        "message": "Success",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJtYXllcmdyYXZlc0B6aWxsYS5jb20iLCJpYXQiOjE2NjU3NjM1NTR9.C_6gzF71kpXMl4GjLBLeYIY1mCiKRMR372wDnY3sVcg"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "token"
+      ]
+    },
+    "UserInfo": {
+      "title": "UserInfo",
+      "example": {
+        "isAdmin": false,
+        "name": "Collins Burch",
+        "employee": "SONIQUE",
+        "email": "collinsburch@sonique.com",
+        "phone": "+1 (998) 564-2710"
+      },
+      "type": "object",
+      "properties": {
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "employee": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "isAdmin",
+        "name",
+        "employee",
+        "email",
+        "phone"
+      ]
+    },
+    "AdminView": {
+      "title": "AdminView",
+      "example": {
+        "allusers": [
+          {
+            "id": 1,
+            "isAdmin": false,
+            "age": 29,
+            "name": "Collins Burch",
+            "employee": "SONIQUE",
+            "email": "collinsburch@sonique.com",
+            "password": "$2a$10$JJt/CZgfdGBRx6WjeLqz..eMppE2Vuvy0cJNAIqwPgsj3tICtZdGC",
+            "phone": "+1 (998) 564-2710",
+            "address": "857 Rockaway Avenue, Hall, Alaska, 7098",
+            "createdAt": "2022-10-14T16:04:48.000Z",
+            "updatedAt": "2022-10-14T16:04:48.000Z"
+          },
+          {
+            "id": 2,
+            "isAdmin": true,
+            "age": 38,
+            "name": "Mayer Graves",
+            "employee": "ZILLA",
+            "email": "mayergraves@zilla.com",
+            "password": "$2a$10$Wd50/Q7Yun5EFsg6Lc/QDuug2T/UgGg89PR6dxzjMzzIK6VbIJykW",
+            "phone": "+1 (925) 580-2220",
+            "address": "830 Wilson Street, Somerset, Maine, 505",
+            "createdAt": "2022-10-14T16:04:48.000Z",
+            "updatedAt": "2022-10-14T16:04:48.000Z"
+          },
+          {
+            "id": 3,
+            "isAdmin": false,
+            "age": 20,
+            "name": "Gayle Daniel",
+            "employee": "FUTURITY",
+            "email": "gayledaniel@futurity.com",
+            "password": "$2a$10$shhFz/CsCOfF.1CwWLFqlO6qNYAf.XHGl6Je5MacQoXum8uBeJUHG",
+            "phone": "+1 (935) 447-2173",
+            "address": "645 Anna Court, Dragoon, Hawaii, 6220",
+            "createdAt": "2022-10-14T16:04:48.000Z",
+            "updatedAt": "2022-10-14T16:04:48.000Z"
+          },
+          {
+            "id": 4,
+            "isAdmin": true,
+            "age": 31,
+            "name": "Rosalyn Curtis",
+            "employee": "ZOSIS",
+            "email": "rosalyncurtis@zosis.com",
+            "password": "$2a$10$pjxi89k0hN05OBNcAq7faepjug2hQZBsfSjdFomm5ZsjAR80CFC8q",
+            "phone": "+1 (895) 463-3120",
+            "address": "174 Bragg Street, Stouchsburg, Montana, 3884",
+            "createdAt": "2022-10-14T16:04:48.000Z",
+            "updatedAt": "2022-10-14T16:04:48.000Z"
+          },
+          {
+            "id": 5,
+            "isAdmin": false,
+            "age": 25,
+            "name": "Jeri Diaz",
+            "employee": "AMTAP",
+            "email": "jeridiaz@amtap.com",
+            "password": "$2a$10$I86/i4P5nqPYgSdcw80q8e.5XfPtMIAef2Uv1mfeHC057NcgDfYku",
+            "phone": "+1 (813) 551-3540",
+            "address": "167 Anthony Street, Hayden, Wyoming, 3523",
+            "createdAt": "2022-10-14T16:04:48.000Z",
+            "updatedAt": "2022-10-14T16:04:48.000Z"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "allusers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Allusers"
+          }
+        }
+      },
+      "required": [
+        "allusers"
+      ]
+    },
+    "Allusers": {
+      "title": "AllUsers",
+      "example": {
+        "id": 1,
+        "isAdmin": false,
+        "age": 29,
+        "name": "Collins Burch",
+        "employee": "SONIQUE",
+        "email": "collinsburch@sonique.com",
+        "password": "$2a$10$JJt/CZgfdGBRx6WjeLqz..eMppE2Vuvy0cJNAIqwPgsj3tICtZdGC",
+        "phone": "+1 (998) 564-2710",
+        "address": "857 Rockaway Avenue, Hall, Alaska, 7098",
+        "createdAt": "2022-10-14T16:04:48.000Z",
+        "updatedAt": "2022-10-14T16:04:48.000Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "employee": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "isAdmin",
+        "age",
+        "name",
+        "employee",
+        "email",
+        "password",
+        "phone",
+        "address",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "RegisterRequest": {
+      "title": "RegisterRequest",
+      "example": {
+        "age": 28,
+        "name": "Dante Testing",
+        "employee": "AMEX",
+        "email": "testing123@gmail.com",
+        "password": "testing123",
+        "phone": "+1 (520) 123-4567",
+        "address": "AMX BLVD Testing, New York, 123"
+      },
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "employee": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "age",
+        "name",
+        "employee",
+        "email",
+        "password",
+        "phone",
+        "address"
+      ]
+    },
+    "RegisterUserRequest": {
+      "title": "RegisterUserRequest",
+      "example": {
+        "message": "Success!",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJ0ZXN0aW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY2NTc2MzYwMX0.Z9ZDjGyMdPA9jw3NEsvuqTsdIsyVGp9AfoWRxpT1Ac8"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "token"
+      ]
+    },
+    "UpdateUserRequest": {
+      "title": "UpdateUserRequest",
+      "example": {
+        "message": "Succesfully updated!",
+        "user": {
+          "id": 6,
+          "isAdmin": true,
+          "age": 28,
+          "name": "Dante Testing",
+          "employee": "AMEX",
+          "email": "testing123@gmail.com",
+          "password": "$2a$10$Z1HNZHqZtx.Mvv3719U5f..7ZOZdMjNWX.We2Q.zY0QMMtJqoiAIS",
+          "phone": "+1 (520) 123-4567",
+          "address": "AMX BLVD Testing, New York, 123",
+          "createdAt": "2022-10-14T16:06:41.000Z",
+          "updatedAt": "2022-10-14T16:09:11.301Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "required": [
+        "message",
+        "user"
+      ]
+    },
+    "User": {
+      "title": "User",
+      "example": {
+        "id": 6,
+        "isAdmin": true,
+        "age": 28,
+        "name": "Dante Testing",
+        "employee": "AMEX",
+        "email": "testing123@gmail.com",
+        "password": "$2a$10$Z1HNZHqZtx.Mvv3719U5f..7ZOZdMjNWX.We2Q.zY0QMMtJqoiAIS",
+        "phone": "+1 (520) 123-4567",
+        "address": "AMX BLVD Testing, New York, 123",
+        "createdAt": "2022-10-14T16:06:41.000Z",
+        "updatedAt": "2022-10-14T16:09:11.301Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "employee": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "isAdmin",
+        "age",
+        "name",
+        "employee",
+        "email",
+        "password",
+        "phone",
+        "address",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "security": [],
+  "tags": [
+    {
+      "name": "login",
+      "description": "Login for registered users"
+    },
+    {
+      "name": "register",
+      "description": "Regsister as a user (least privelege access by default)"
+    },
+    {
+      "name": "admin",
+      "description": "Privilege access to user list"
+    },
+    {
+      "name": "users",
+      "description": "Least Privilege access"
+    }
+  ]
+}
